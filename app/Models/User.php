@@ -40,4 +40,7 @@ class User extends Authenticatable
     public function profile(){
         return $this->hasOne(UserDetal::class,'user_id','id');
     }
+    public function roles(){
+        return $this->hasMany(UserDetal::class,'user_id','id');
+    }
 }
