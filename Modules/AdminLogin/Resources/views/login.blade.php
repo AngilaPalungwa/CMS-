@@ -10,6 +10,28 @@
 </head>
 
 <body>
+    @if (Session::has('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+
+    @endif
+    @if (Session::has('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+
+    @endif
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error )
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+
+@endif
     <div class="container-fluid bg-light ">
         <div class="row justify-content-center">
             <div class="col-6 justify-content-center mt-5">
@@ -18,16 +40,7 @@
                         <h1>Login Form</h1>
                     </div>
                     <div class="card-body">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->any() as $error )
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
 
-                        @endif
                         <form action="{{ route('admin.login.submit') }}" method="post">
                             @csrf
 

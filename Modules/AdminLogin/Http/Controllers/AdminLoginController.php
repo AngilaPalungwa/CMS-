@@ -33,13 +33,11 @@ class AdminLoginController extends Controller
         $email=$request->email;
         $password=$request->password;
         $user=User::where('email',$email)->first();
-        dd($user);
         if($user){
 
             if($user->password){
                 if(Hash::check($password, $user->password))
                 {
-                    Auth::guard('admin')->check();
                     Auth::guard('admin')->login($user);
                     return redirect()->route('admin.dashboard');
                 }
@@ -60,9 +58,13 @@ class AdminLoginController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function logout(Request $request)
     {
-        //
+        if(auth()->guard('admin')->check()){
+            Auth::guard('admin')->logout();
+            $request->session()->flash('success','Logged Out');
+            return redirect()->route('admin.login');
+        }
     }
 
     /**

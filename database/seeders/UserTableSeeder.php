@@ -17,7 +17,7 @@ class UserTableSeeder extends Seeder
         $data=[
             'name'=>'admin',
             'email'=>'admin@gmail.com',
-            'password'=>'123456',
+            'password'=>bcrypt('123456'),
             'username'=>'admin',
             'mobile'=>'9819031881',
         ];

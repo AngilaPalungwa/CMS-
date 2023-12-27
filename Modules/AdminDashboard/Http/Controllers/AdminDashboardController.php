@@ -2,6 +2,7 @@
 
 namespace Modules\AdminDashboard\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,6 +15,9 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
+        $user=User::with('profile')->get();
+        dd($user);
+
         return view('admindashboard::index');
     }
 
@@ -53,6 +57,7 @@ class AdminDashboardController extends Controller
      */
     public function edit($id)
     {
+
         return view('admindashboard::edit');
     }
 
