@@ -2,23 +2,23 @@
 
 namespace Modules\AdminDashboard\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Settings;
+use App\Services\SettingService;
+use App\Utils\SettingUtils;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class AdminDashboardController extends Controller
+class SystemSettingController extends Controller
 {
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(SettingService $settingService)
     {
-        // $user=User::with('profile')->get();
-        // dd($user);
 
-        return view('admindashboard::index');
+        return view('admindashboard::system_setting',compact('settingService'));
     }
 
     /**
@@ -37,7 +37,32 @@ class AdminDashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'email' =>'required|email',
+            'name' =>'required',
+        ]);
+        $logoName='';
+        if($request->has('logo') && $request->file('logo')){
+            //check if exists
+            if(SettingUtils::get('system_logo')){
+                if( file_exists(public_path().'/uploads/'.SettingUtils::get('system_logo'))){
+                    unlink(public_path().'/uploads/'.SettingUtils::get('system_logo'));
+                }
+            }
+            $file=$request->file('logo');
+            $newName=$logoName=time().'-'.rand(10,9999999).'-'.$file->getClientOriginalName();
+            $path=public_path('/uploads/');
+            $file->move($path,$newName);
+
+        }
+        SettingUtils::set('system_name',$request->name);
+        SettingUtils::set('system_email',$request->email);
+        SettingUtils::set('system_phone',$request->phone);
+        SettingUtils::set('system_footer',$request->footer);
+        SettingUtils::set('system_logo',$logoName);
+
+        return redirect()->back();
     }
 
     /**
@@ -57,7 +82,6 @@ class AdminDashboardController extends Controller
      */
     public function edit($id)
     {
-
         return view('admindashboard::edit');
     }
 

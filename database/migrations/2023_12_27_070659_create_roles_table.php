@@ -32,3 +32,7 @@ class CreateRolesTable extends Migration
         Schema::dropIfExists('roles');
     }
 }
+// $table->unsignedBigInteger('roles_id');
+// $table->unsignedBigInteger('users_id');
+// $table->foreign('roles_id')->references('id')->on('roles')->onDelete('cascade');
+// $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
