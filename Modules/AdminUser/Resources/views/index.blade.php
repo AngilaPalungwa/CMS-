@@ -1,37 +1,44 @@
 @extends('backend.layout.master')
 
 @section('content')
-@if(session()->has('success'))
-    <div class="alert-success"> {{ session('success') }}</div>
-@endif
+    @if (session()->has('success'))
+        <div class="alert-success"> {{ session('success') }}</div>
+    @endif
 
-@if(session()->has('error'))
-    <div class="alert-danger"> {{ session('error') }}</div>
-@endif
+    @if (session()->has('error'))
+        <div class="alert-danger"> {{ session('error') }}</div>
+    @endif
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Reset Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form" method="post" action="{{ route('users.password.reset') }}">
+                        @csrf
+                        <input type="hidden" id="resetId" value="" name="id">
+                        <input type="password" name="password" class="form-control">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <form action="{{ route('users.password.reset') }}" method="post" class="form">
-            <input type="password" name="password" class="form-control">
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Reset</button>
-        </div>
-      </div>
     </div>
-  </div>
+
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -42,17 +49,22 @@
                     <div class="card-tools">
                         <div class="row">
                             <div class="col">
-                                <div class="input-group input-group-sm m-1" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                    </div>
+
+                                <div class="input-group input-group-sm m-1" style="width: 150px;">
+                                    <form action="{{ route('users.index') }}" method="GET">
+                                        @csrf
+                                        <input type="text" name="search" class="form-control float-right" placeholder="Search">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="col">
-                                <a href="{{ route('users.create') }}" class="float-end btn btn-info"><i class="fas fa-plus"></i><span
-                                    class="hide-menu ps-2">Add Users </span></a>
+                                <a href="{{ route('users.create') }}" class="float-end btn btn-info"><i
+                                        class="fas fa-plus"></i><span class="hide-menu ps-2">Add Users </span></a>
                             </div>
                         </div>
 
@@ -83,9 +95,11 @@
                                     {{-- <td>{{ $user->status }}</> --}}
                                     </td>
                                     <td>
-                                        <a href="{{ route('users.edit'),$user->id }} " class="btn btn-success">Edit</a>
-                                        {{-- <a href="{{ route('') }} " class="btn btn-danger">Delete</a> --}}
-                                        <a href=" " class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">ResetPassword</a>
+                                        <a href="{{ route('users.edit', $user->id) }} " class="btn btn-success">Edit</a>
+                                        <a href="{{ route('users.delete', $user->id) }} " class="btn btn-danger">Delete</a>
+                                        <a href="" class="btn btn-primary resetBtn" data-user-id="$user->id">Reset
+                                            Password</a>
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -97,4 +111,20 @@
             <!-- /.card -->
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.resetBtn').click(function() {
+                var id = $(this).data('user-id');
+                if (id == '') {
+                    return false;
+                }
+                $('#resetId').val(id);
+                $('#exampleModalCenter').modal('show');
+
+            });
+        });
+    </script>
 @endsection
