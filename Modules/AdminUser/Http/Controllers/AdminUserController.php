@@ -110,10 +110,8 @@ class AdminUserController extends Controller
     }
     public function reset(Request $request)
     {
-
         $id=$request->id;
         $password=$request->password;
-        // dd($password);
 
        if(!$id||!$password){
         $request->session()->flash('error','Something is wrong');

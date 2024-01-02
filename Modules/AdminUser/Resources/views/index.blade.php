@@ -10,7 +10,6 @@
     @endif
 
 
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
@@ -97,7 +96,8 @@
                                     <td>
                                         <a href="{{ route('users.edit', $user->id) }} " class="btn btn-success">Edit</a>
                                         <a href="{{ route('users.delete', $user->id) }} " class="btn btn-danger">Delete</a>
-                                        <a href="" class="btn btn-primary resetBtn" data-user-id="$user->id">Reset
+                                        <a href="" class="btn btn-primary resetBtn" data-user-id="{{ $user->id }}"
+                                            data-toggle="modal" data-target="#exampleModalCenter">Reset
                                             Password</a>
 
                                     </td>
