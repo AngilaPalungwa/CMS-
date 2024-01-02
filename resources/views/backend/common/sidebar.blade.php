@@ -36,6 +36,12 @@
 
                 </li>
                 <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                        <i class="nav-icon fas fa-solid fa-globe"></i>
+                        <p>Website</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('system.setting') }}" class="nav-link">
                         <i class="nav-icon fas fa-solid fa-gear"></i>
                         <p>System Setting</p>

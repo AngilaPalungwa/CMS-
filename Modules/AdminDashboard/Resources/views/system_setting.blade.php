@@ -39,6 +39,42 @@
                             @endif
 
                         </div>
+                        <div class="form-group">
+                            <label for="">Facebook <span class="text-danger">*</span></label>
+                            <input type="text" name="facebook" id="phpne" class="form-control"
+                                placeholder="Enter your facebook" value="{{ \App\Utils\SettingUtils::get('system_facebook') }}">
+                            @if ($errors->first('facebook'))
+                                <span style="color: red">{{ $errors->first('facebook') }}</span>
+                            @endif
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">LinkedIn <span class="text-danger">*</span></label>
+                            <input type="text" name="linkedin" id="linkedin" class="form-control"
+                                placeholder="Enter your linkedin" value="{{ \App\Utils\SettingUtils::get('system_linkedin') }}">
+                            @if ($errors->first('linkedin'))
+                                <span style="color: red">{{ $errors->first('linkedin') }}</span>
+                            @endif
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">Instagram <span class="text-danger">*</span></label>
+                            <input type="text" name="instagram" id="instagram" class="form-control"
+                                placeholder="Enter your instagram" value="{{ \App\Utils\SettingUtils::get('system_instagram') }}">
+                            @if ($errors->first('instagram'))
+                                <span style="color: red">{{ $errors->first('instagram') }}</span>
+                            @endif
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">Youtube <span class="text-danger">*</span></label>
+                            <input type="text" name="youtube" id="youtube" class="form-control"
+                                placeholder="Enter your youtube" value="{{ \App\Utils\SettingUtils::get('system_youtube') }}">
+                            @if ($errors->first('youtube'))
+                                <span style="color: red">{{ $errors->first('youtube') }}</span>
+                            @endif
+
+                        </div>
 
 
                         <div class="form-group">
@@ -54,7 +90,7 @@
                             <input type="file" name="logo" id="logo" class="form-control">
 
                         </div>
-                        <button type="submit" class="btn btn-info">Add Record</button>
+                        <button type="submit" class="btn btn-info">Update Record</button>
                     </form>
                 </div>
             </div>

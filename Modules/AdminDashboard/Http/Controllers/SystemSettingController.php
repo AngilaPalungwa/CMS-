@@ -60,6 +60,10 @@ class SystemSettingController extends Controller
         SettingUtils::set('system_email',$request->email);
         SettingUtils::set('system_phone',$request->phone);
         SettingUtils::set('system_footer',$request->footer);
+        SettingUtils::set('system_facebook',$request->facebook);
+        SettingUtils::set('system_instagram',$request->instagram);
+        SettingUtils::set('system_linkedin',$request->linkedin);
+        SettingUtils::set('system_youtube',$request->youtube);
         SettingUtils::set('system_logo',$logoName);
 
         return redirect()->back();
