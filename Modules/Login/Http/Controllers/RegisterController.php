@@ -2,14 +2,16 @@
 
 namespace Modules\Login\Http\Controllers;
 
+use App\Mail\RegisterMail;
 use App\Models\User;
+use App\Models\UserDetal;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
-class LoginController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +28,7 @@ class LoginController extends Controller
      */
     public function create()
     {
-        return view('login::create');
+        return view('login::register');
     }
 
     /**
@@ -34,23 +36,37 @@ class LoginController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function submit(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
-            'email'=>'required|email',
-            'password'=>'required|min:6'
+            'name'=>'required',
+            'email' =>'required|email|unique:App\Models\User,email',
+            'username'=>'required|unique:App\Models\User,username',
+            'password' =>'required|min:6',
         ]);
-        $email=$request->email;
-        $password=$request->password;
-        $user=User::where('email',$email)->first();
-        if($user && $password){
-             if(Hash::check($password, $user->password)){
-                Auth::login($user);
-                return redirect()->route('home');
-             }
-             session()->flash('error','Invalid Password');
-             return redirect()->back();
+        DB::beginTransaction();
+        $data=[
+            'name'=>strip_tags($request->name),
+            'email'=>strip_tags($request->email),
+            'username'=>strip_tags($request->username),
+            'password'=>bcrypt($request->password),
+            // 'status'=>bcrypt($request->password),
+        ];
+        $user_id=User::insertGetId($data);
+        if($user_id){
+
+            $detailed_data=[
+                'address'=>$request->address,
+                'designation'=>$request->designation,
+                'user_id'=>$user_id,
+            ];
         }
+        $status=UserDetal::insert($detailed_data);
+        if($status){
+            DB::commit();
+            // Mail::to($request->email)->send(new RegisterMail($request->username));
+        }
+        return redirect()->route('login');
     }
 
     /**

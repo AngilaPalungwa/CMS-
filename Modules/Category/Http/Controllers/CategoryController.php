@@ -1,15 +1,12 @@
 <?php
 
-namespace Modules\Login\Http\Controllers;
+namespace Modules\Category\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
-class LoginController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +14,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('login::index');
+        return view('category::index');
     }
 
     /**
@@ -26,7 +23,7 @@ class LoginController extends Controller
      */
     public function create()
     {
-        return view('login::create');
+        return view('category::create');
     }
 
     /**
@@ -34,23 +31,9 @@ class LoginController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function submit(Request $request)
+    public function store(Request $request)
     {
-        $request->validate([
-            'email'=>'required|email',
-            'password'=>'required|min:6'
-        ]);
-        $email=$request->email;
-        $password=$request->password;
-        $user=User::where('email',$email)->first();
-        if($user && $password){
-             if(Hash::check($password, $user->password)){
-                Auth::login($user);
-                return redirect()->route('home');
-             }
-             session()->flash('error','Invalid Password');
-             return redirect()->back();
-        }
+        //
     }
 
     /**
@@ -60,7 +43,7 @@ class LoginController extends Controller
      */
     public function show($id)
     {
-        return view('login::show');
+        return view('category::show');
     }
 
     /**
@@ -70,7 +53,7 @@ class LoginController extends Controller
      */
     public function edit($id)
     {
-        return view('login::edit');
+        return view('category::edit');
     }
 
     /**

@@ -7,12 +7,27 @@
                         <a class="nav-link text-body small" href="#">{{ \Carbon\Carbon::parse(now())->format('D, M d, Y') }}</a>
                     </li>
 
+                    @if (!Auth::check())
+
                     <li class="nav-item border-right border-secondary">
-                        <a class="nav-link text-body small" href="#">Login</a>
+                        <a class="nav-link text-body small" href="{{ route('login') }}">Login</a>
                     </li>
+                    @endif
+                    @if (Auth::check())
+                    <li class="nav-item nav-item border-right border-secondary">
+                        <a class="nav-link text-body small" href="#"> Welcome, {{ auth()->user()->name }}</a>
+                    </li>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link text-body small" href="#">Logout</a>
+                    </li> --}}
+                    @else
+
+                    @endif
                     <li class="nav-item">
-                        <a class="nav-link text-body small" href="#">Register</a>
+                        <a class="nav-link text-body small" href="{{ route('frontend.register') }}">Register</a>
                     </li>
+
+
                 </ul>
             </nav>
         </div>
