@@ -2,6 +2,7 @@
 
 namespace Modules\Category\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('category::index');
+        $categories=Category::latest()->paginate(20);
+        return view('category::index',compact('categories'));
     }
 
     /**
@@ -33,7 +35,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'status'=>'required',
+        ]);
+        $data=[
+            'name'=>$request->name,
+            'status'=>$request->status,
+        ];
+        Category::insert($data);
+        session()->flash('Success','Category Added Successfully');
+        return redirect()->route('category');
     }
 
     /**
@@ -53,7 +65,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return view('category::edit');
+        if(!$id){
+            session()->flash('error','Something is wrong');
+            return redirect()->back();
+        }
+        $category=Category::find($id);
+
+        return view('category::edit',compact('category'));
     }
 
     /**
@@ -64,7 +82,27 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(!$id){
+            session()->flash('error','Something is wrong');
+            return redirect()->back();
+        }
+        $category=Category::find($id);
+        if($category){
+
+            $request->validate([
+                'name'=>'required',
+                'status'=>'required',
+            ]);
+            $data=[
+                'name'=>$request->name,
+                'status'=>$request->status,
+            ];
+            $category->update($data);
+            session()->flash('Success','Category Updated Successfully');
+            return redirect()->route('category');
+        }
+        session()->flash('error','Something is wrong');
+        return redirect()->route('category');
     }
 
     /**
