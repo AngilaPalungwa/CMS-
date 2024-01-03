@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="input-group input-group-sm m-1" style="width: 175px;">
-                                    <form action="" method="GET">
+                                    <form action="{{ route('category') }}" method="GET">
                                         @csrf
                                         <div class="row">
                                             <div class="col">
@@ -65,7 +65,7 @@
                                    <td>{{ $category->status }}</td>
                                     <td>
                                         <a href="{{ route('category.edit', $category->id) }} " class="btn btn-success">Edit</a>
-                                        {{-- <a href="{{ route('categorys.delete', $category->id) }} " class="btn btn-danger">Delete</a> --}}
+                                        <a href="{{ route('category.delete', $category->id) }} " class="btn btn-danger">Delete</a>
 
                                     </td>
                                 </tr>

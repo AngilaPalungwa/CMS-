@@ -13,9 +13,16 @@ class CategoryController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {   $query=Category::query();
+        $searchTerm=$request->search;
+        if($searchTerm){
+            $query->where('name','LIKE','%'.$searchTerm.'%');
+            $data['users']=$query->get();
+            return view('category::index',$data);
+        }
         $categories=Category::latest()->paginate(20);
+
         return view('category::index',compact('categories'));
     }
 
@@ -112,6 +119,19 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (!$id) {
+            session()->flash('error', 'Something went Wrong!!');
+            return redirect()->route('users.index');
+        }
+
+        $category = Category::find($id);
+        if ($category) {
+            $category->delete();
+            session()->flash('success', 'Category deleted successfully');
+            return redirect()->route('category');
+        }
+
+        session()->flash('error', 'Something went Wrong!!');
+        return redirect()->route('category');
     }
 }
