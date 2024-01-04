@@ -18,7 +18,7 @@ class CategoryController extends Controller
         $searchTerm=$request->search;
         if($searchTerm){
             $query->where('name','LIKE','%'.$searchTerm.'%');
-            $data['users']=$query->get();
+            $data['categories']=$query->get();
             return view('category::index',$data);
         }
         $categories=Category::latest()->paginate(20);

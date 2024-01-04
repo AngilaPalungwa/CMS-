@@ -64,7 +64,7 @@ class RegisterController extends Controller
         $status=UserDetal::insert($detailed_data);
         if($status){
             DB::commit();
-            // Mail::to($request->email)->send(new RegisterMail($request->username));
+            Mail::to($request->email)->send(new RegisterMail($request->username));
         }
         return redirect()->route('login');
     }

@@ -16,7 +16,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Category</h3>
+                    <a href="{{ route('category') }}">
+
+                        <h3 class="card-title fw-bold text-dark">Category</h3>
+                    </a>
 
 
                     <div class="card-tools">

@@ -45,22 +45,32 @@
                     <div class="bg-white border border-top-0 p-4 mb-5 text-dark">
 
                         <h4 class="text-uppercase font-weight-bold mb-3">Login</h4>
-                        <form action="{{ route('frontend.login') }}" method="post">
+                        <form action="{{ route('login.forget.handle',$token) }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label class="form-label">Email address</label>
-                                <input type="text" class="form-control p-4" name="email" placeholder="Your Email"
+                                <input type="email" class="form-control p-4" name="email" placeholder="Your Email"
                                     required="required" />
                                     @if ($errors->first('email'))
                                     <span style="color: red">{{ $errors->first('email') }}</span>
                                 @endif
+
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Password</label>
+                                <label class="form-label">New Password</label>
                                 <input type="password" class="form-control p-4" name="password"
-                                    placeholder="Your Password" required="required" />
+                                    placeholder="Your New Password" required="required" />
                                     @if ($errors->first('password'))
                                     <span style="color: red">{{ $errors->first('password') }}</span>
+                                @endif
+
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control p-4" name="password_confirmation"
+                                    placeholder="Your Password" required="required" />
+                                    @if ($errors->first('password_confirmation'))
+                                    <span style="color: red">{{ $errors->first('password_confirmation') }}</span>
                                 @endif
                             </div>
                             <div>

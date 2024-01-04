@@ -41,37 +41,32 @@
     <div class="container-fluid mt-5 pt-5">
         <div class="container">
             <div class="row justify-content-center">
+                @if (session()->has('success'))
+                <div class="alert-success">
+                    {{ session('success') }}
+                </div>
+
+                @endif
                 <div class="col-lg-6 ">
                     <div class="bg-white border border-top-0 p-4 mb-5 text-dark">
 
-                        <h4 class="text-uppercase font-weight-bold mb-3">Login</h4>
-                        <form action="{{ route('frontend.login') }}" method="post">
+                        <h4 class="text-uppercase font-weight-bold mb-3">Reset Password</h4>
+                        <form action="{{ route('login.forget.reset') }}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label class="form-label">Email address</label>
+                                <label class="form-label">Enter Email address</label>
                                 <input type="text" class="form-control p-4" name="email" placeholder="Your Email"
                                     required="required" />
                                     @if ($errors->first('email'))
                                     <span style="color: red">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Password</label>
-                                <input type="password" class="form-control p-4" name="password"
-                                    placeholder="Your Password" required="required" />
-                                    @if ($errors->first('password'))
-                                    <span style="color: red">{{ $errors->first('password') }}</span>
-                                @endif
-                            </div>
+
                             <div>
                                 <button class="btn btn-primary font-weight-semi-bold px-4" style="height: 50px;"
-                                    type="submit">Login</button>
+                                    type="submit">Submit</button>
                             </div>
                         </form>
-                        <div class="mt-2">
-
-                            <a href="{{ route('login.forget') }}" >Forgot Password?</a>
-                        </div>
                     </div>
                 </div>
 

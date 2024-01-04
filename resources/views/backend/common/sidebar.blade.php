@@ -55,8 +55,14 @@
                 </li>
                 <li class="nav-item">
                         <a href="{{ route('category') }}" class="nav-link">
-                        <i class="nav-icon fas fas fa-user"></i>
+                        <i class="nav-icon fas fa-solid fa-list "></i>
                         <p>Category</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                        <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-regular fa-newspaper"></i>
+                        <p>Posts</p>
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
