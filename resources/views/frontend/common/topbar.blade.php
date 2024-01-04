@@ -12,20 +12,21 @@
                     <li class="nav-item border-right border-secondary">
                         <a class="nav-link text-body small" href="{{ route('login') }}">Login</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-body small" href="{{ route('frontend.register') }}">Register</a>
+                    </li>
                     @endif
                     @if (Auth::check())
                     <li class="nav-item nav-item border-right border-secondary">
                         <a class="nav-link text-body small" href="#"> Welcome, {{ auth()->user()->name }}</a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link text-body small" href="#">Logout</a>
-                    </li> --}}
-                    @else
+                    <li class="nav-item">
+                        <a class="nav-link text-body small" href="{{ route('logout') }}">Logout</a>
+                    </li>
+
 
                     @endif
-                    <li class="nav-item">
-                        <a class="nav-link text-body small" href="{{ route('frontend.register') }}">Register</a>
-                    </li>
+
 
 
                 </ul>

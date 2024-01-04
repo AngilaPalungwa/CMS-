@@ -14,6 +14,8 @@
 Route::prefix('login')->group(function() {
     Route::get('/', 'LoginController@index')->name('login');
     Route::post('/submit', 'LoginController@submit')->name('frontend.login');
+    Route::get('/logout','LoginController@logout')->name('logout');
+
     Route::get('/register', 'RegisterController@create')->name('frontend.register');
     Route::post('/register-submit', 'RegisterController@store')->name('register.submit');
     Route::get('/forget-password', 'ResetPasswordController@index')->name('login.forget');

@@ -44,7 +44,7 @@
                 <div class="col-lg-6 ">
                     <div class="bg-white border border-top-0 p-4 mb-5 text-dark">
 
-                        <h4 class="text-uppercase font-weight-bold mb-3">Login</h4>
+                        <h4 class="text-uppercase font-weight-bold mb-3">Reset Password</h4>
                         <form action="{{ route('login.forget.handle',$token) }}" method="post">
                             @csrf
                             <div class="form-group">
@@ -75,7 +75,7 @@
                             </div>
                             <div>
                                 <button class="btn btn-primary font-weight-semi-bold px-4" style="height: 50px;"
-                                    type="submit">Login</button>
+                                    type="submit">Reset</button>
                             </div>
                         </form>
                         <div class="mt-2">
