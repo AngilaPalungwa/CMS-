@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('post') }}" class="nav-link">
                         <i class="nav-icon fas fa-regular fa-newspaper"></i>
                         <p>Posts</p>
                     </a>

@@ -2,6 +2,8 @@
 
 namespace Modules\Post\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -12,9 +14,17 @@ class PostController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
-    {
-        return view('post::index');
+    public function index(Request $request)
+    {   $query=Post::query();
+        $searchTerm=$request->search;
+        if($searchTerm){
+            $query->where('name','LIKE','%'.$searchTerm.'%');
+            $data['posts']=$query->get();
+            return view('post::index',$data);
+        }
+        $posts=Post::latest()->paginate(20);
+
+        return view('post::index',compact('posts'));
     }
 
     /**
@@ -23,7 +33,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post::create');
+        $categories=Category::all();
+        return view('post::create',compact('categories'));
     }
 
     /**
@@ -33,7 +44,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'description'=>'required',
+            'category_id'=>'required',
+            'created_by'=>'required',
+        ]);
     }
 
     /**

@@ -12,5 +12,10 @@
 */
 
 Route::prefix('post')->group(function() {
-    Route::get('/', 'PostController@index');
+    Route::get('/', 'PostController@index')->name('post');
+    Route::get('/create', 'PostController@create')->name('post.create');
+    Route::post('/store', 'PostController@store')->name('post.store');
+    Route::get('/edit', 'PostController@edit')->name('post.edit');
+    Route::post('/update', 'PostController@update')->name('post.update');
+
 });
