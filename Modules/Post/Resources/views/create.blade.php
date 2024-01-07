@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body">
 
-                    <form action="{{ route('post.store') }}" , method="post" enctype="multipart/form-data">
+                    <form action="{{ route('posts.store') }}" , method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="name"> Title <span class="text-danger">*</span></label>
@@ -31,14 +31,7 @@
                                 <span style="color: red">{{ $errors->first('category_id') }}</span>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <label for="name"> Author <span class="text-danger">*</span></label>
-                            <input type="text" name="created_by" id="created_by" class="form-control"
-                                placeholder="Enter  author" value="{{ old('created_by') }}">
-                            @if ($errors->first('created_by'))
-                                <span style="color: red">{{ $errors->first('created_by') }}</span>
-                            @endif
-                        </div>
+
                         <div class="form-group">
                             <label for="name"> Description <span class="text-danger">*</span></label>
                             <textarea name="description" id="editor" cols="30" rows="10"></textarea>
@@ -48,10 +41,10 @@
                         </div>
                         <div class="form-group">
                             <label for="name"> Featured Image <span class="text-danger">*</span></label>
-                            <input type="text" name="featured_image" id="featured_image" class="form-control"
-                                placeholder="Enter  featured_image" value="">
-                            @if ($errors->first('featured_image'))
-                                <span style="color: red">{{ $errors->first('featured_image') }}</span>
+                            <input type="file" name="image" id="image" class="form-control"
+                                placeholder="Enter  image" value="">
+                            @if ($errors->first('image'))
+                                <span style="color: red">{{ $errors->first('image') }}</span>
                             @endif
                         </div>
 
@@ -71,4 +64,12 @@
         </div>
     </div>
     </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
 @endsection

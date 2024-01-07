@@ -7,6 +7,8 @@ use App\Models\Post;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
+
 
 class PostController extends Controller
 {
@@ -44,12 +46,37 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
-            'title'=>'required',
-            'description'=>'required',
-            'category_id'=>'required',
-            'created_by'=>'required',
+            'category_id' => 'required',
+            'title' => 'required',
+            'description' =>'required',
+            'status' =>'required',
+ //           'featured_image' =>'required_if:featured_image,true|mime:jpeg'
         ]);
+
+        $imagePath='';
+        if($request->has('image')&&$request->file('image')){
+            $file=$request->file('image');
+            $newName=time().'-'.rand(10,99999).'-'.$file->getClientOriginalExtension();
+            $path=public_path('/uploads');
+            $file->move($path,$newName);
+            $imagePath=$newName;
+        }
+        $data=[
+            'title'=>$request->title,
+            'description'=>$request->description,
+            'category_id'=>$request->category_id,
+            'status'=>$request->status,
+            'slug'=>Str::slug($request->title),
+            'created_by'=>auth()->guard('admin')->user()->id,
+            'image'=>$imagePath,
+        ];
+
+        Post::insert($data);
+
+       $request->session()->flash('success','Post Added Successfully');
+       return  redirect()->route('post');
     }
 
     /**
@@ -69,7 +96,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        return view('post::edit');
+        if(!$id){
+           session()->flash('error','Post not found');
+            return  redirect()->route('post');
+        }
+        $post=Post::find($id);
+        $categories=Category::all();
+        return view('post::edit',compact('post','categories'));
     }
 
     /**
@@ -80,7 +113,43 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(!$id){
+            session()->flash('error','Something is wrong');
+            return redirect()->back();
+        }
+        $post=Post::find($id);
+        if($post){
+            $request->validate([
+                'category_id' => 'required',
+                'title' => 'required',
+                'description' =>'required',
+                'status' =>'required',
+     //           'featured_image' =>'required_if:featured_image,true|mime:jpeg'
+            ]);
+
+            $imagePath='';
+            if($request->has('image')&&$request->file('image')){
+                $file=$request->file('image');
+                $newName=time().'-'.rand(10,99999).'-'.$file->getClientOriginalExtension();
+                $path=public_path('/uploads');
+                $file->move($path,$newName);
+                $imagePath=$newName;
+            }
+            $data=[
+                'title'=>$request->title,
+                'description'=>$request->description,
+                'category_id'=>$request->category_id,
+                'status'=>$request->status,
+                'slug'=>Str::slug($request->title),
+                'created_by'=>auth()->guard('admin')->user()->id,
+                'image'=>$imagePath,
+            ];
+            $post->update($data);
+            session()->flash('success','Post Updated Successfully');
+            return redirect()->route('post');
+        }
+        session()->flash('error','Something is wrong');
+        return redirect()->route('post');
     }
 
     /**
@@ -90,6 +159,17 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!$id){
+            session()->flash('error','Something is wrong');
+            return redirect()->route('post');
+        }
+        $post=Post::find($id);
+        if($post){
+            $post->delete();
+            session()->flash('success','Post deleted successfully');
+            return redirect()->route('post');
+        }
+        session()->flash('error', 'Something went Wrong!!');
+        return redirect()->route('post');
     }
 }
