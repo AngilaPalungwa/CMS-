@@ -13,4 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {return view('frontend.index');})->name('home');
+// Route::get('/', function () {return view('frontend.index');})->name('home');
+Route::get('/',[\App\Http\Controllers\HomeController::class,'index'])->name('home');
+Route::get('/post-detail/{slug}',[\App\Http\Controllers\HomeController::class,'postDetail'])->name('post.detail');
+

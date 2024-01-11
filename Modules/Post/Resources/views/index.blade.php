@@ -42,7 +42,7 @@
                             </div>
                             <div class="col">
                                 <a href="{{ route('post.create') }}" class="float-end btn btn-info"><i
-                                        class="fas fa-plus"></i><span class="hide-menu ps-2">Create Category </span></a>
+                                        class="fas fa-plus"></i><span class="hide-menu ps-2">Create Post </span></a>
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $post->title }}</td>
-                                    <td>{{ $post->category }}</td>
+                                    <td>{{ $post->category->name }}</td>
                                     <td>{{ $post->created_by }}</td>
                                    <td>{{ $post->status }}</td>
                                     <td>

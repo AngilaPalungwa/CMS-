@@ -58,7 +58,7 @@ class PostController extends Controller
         $imagePath='';
         if($request->has('image')&&$request->file('image')){
             $file=$request->file('image');
-            $newName=time().'-'.rand(10,99999).'-'.$file->getClientOriginalExtension();
+            $newName=time() . $file->getCLientOriginalName();
             $path=public_path('/uploads');
             $file->move($path,$newName);
             $imagePath=$newName;
@@ -66,7 +66,7 @@ class PostController extends Controller
         $data=[
             'title'=>$request->title,
             'description'=>$request->description,
-            'category_id'=>$request->category_id,
+            'category_id' => $request->category_id,
             'status'=>$request->status,
             'slug'=>Str::slug($request->title),
             'created_by'=>auth()->guard('admin')->user()->id,
@@ -130,7 +130,7 @@ class PostController extends Controller
             $imagePath='';
             if($request->has('image')&&$request->file('image')){
                 $file=$request->file('image');
-                $newName=time().'-'.rand(10,99999).'-'.$file->getClientOriginalExtension();
+                $newName=time() . $file->getCLientOriginalName();
                 $path=public_path('/uploads');
                 $file->move($path,$newName);
                 $imagePath=$newName;
@@ -138,7 +138,7 @@ class PostController extends Controller
             $data=[
                 'title'=>$request->title,
                 'description'=>$request->description,
-                'category_id'=>$request->category_id,
+                'category_id' => $request->category_id,
                 'status'=>$request->status,
                 'slug'=>Str::slug($request->title),
                 'created_by'=>auth()->guard('admin')->user()->id,

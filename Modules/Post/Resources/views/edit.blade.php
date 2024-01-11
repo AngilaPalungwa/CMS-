@@ -34,7 +34,7 @@
 
                         <div class="form-group">
                             <label for="name"> Description <span class="text-danger">*</span></label>
-                            <textarea name="description" id="editor" cols="30" rows="10">{!! $post->description !!}</textarea>
+                            <textarea name="description" id="editor" cols="30" rows="10">{{ old('description') }}</textarea>
                             @if ($errors->first('description'))
                                 <span style="color: red">{{ $errors->first('description') }}</span>
                             @endif
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label for="name"> Featured Image <span class="text-danger">*</span></label>
                             <input type="file" name="image" id="image" class="form-control"
-                                placeholder="Enter  image" value="{{ $post->image }}">
+                                placeholder="Enter  image" value="{{ $post->image }}" accept="images/jpeg, images/jpg, images/png">
                             @if ($errors->first('image'))
                                 <span style="color: red">{{ $errors->first('image') }}</span>
                             @endif
